@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            background-color: #ff2a50;
+        }
+
+        #noBtn {
+            background-color: #e0e0e0;
+            color: #333;
+            position: relative; /* Essential for moving */
+        }
+
+        /* Celebration hidden by default */
+        #celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        /* Floating Hearts Animation Background */
+        .bg-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.3);
+            display: inline-block;
+            height: 30px;
+            margin: 0 10px;
+            top: -10vh;
+            transform: rotate(-45deg);
+            width: 30px; 
+            animation: fall 5s linear infinite;
+        }
+        .heart:before, .heart:after {
+            content: "";
+            background-color: inherit;
+            border-radius: 50%;
+            height: 30px;
+            position: absolute;
+            width: 30px;
+        }
+        .heart:before { top: -15px; left: 0; }
+        .heart:after { left: 15px; top: 0; }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(-45deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(-45deg); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="bg-hearts"></div>
+
+    <div class="container" id="mainCard">
+        <h1>Will you be my Valentine? 🌹</h1>
+        <p>You make my world brighter every day.</p>
+        <div class="btn-group">
+            <button id="yesBtn" onclick="acceptLove()">YES!</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+        // Logic to make the "No" button run away
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 100);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 100);
+            
+            noBtn.style.position = 'fixed'; // Change to fixed to move freely
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+
+        // Logic for the "Yes" button
+        function acceptLove() {
+            const container = document.getElementById('mainCard');
+            container.innerHTML = `
+                <h1 style="font-size: 3rem;">YAY! ❤️</h1>
+                <p>I knew you'd say yes! I love you Hiya! 🥰</p>
+                <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Happy Cat" style="width: 100%; max-width: 300px; border-radius: 10px;">
+            `;
+            
+            // Trigger confetti (simple CSS/JS particle effect)
+            createConfetti();
+        }
+
+        // Simple Background Heart Generator
+        function createHearts() {
+            const bg = document.getElementById('bg-hearts');
+            for(let i=0; i<20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+                heart.style.backgroundColor = `rgba(255, 255, 255, ${Math.random() * 0.5})`;
+                bg.appendChild(heart);
+            }
+        }
+
+        function createConfetti() {
+            // Quick burst of colors
+            document.body.style.background = "linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%)";
+        }
+
+        // Start background animation
+        createHearts();
+    </script>
+</body>
+</html>
